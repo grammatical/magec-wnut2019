@@ -1,0 +1,8 @@
+*~
+*.swo
+*.swp
+*.pyc
+
+*.npz
+*.spm
+*.tgz

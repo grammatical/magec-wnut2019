@@ -1,0 +1,34 @@
+#!/bin/bash -v
+
+set -e
+
+ROOTDIR="$( realpath ../.. )"
+MARIAN=$ROOTDIR/marian-dev/build
+DATA=$ROOTDIR/data/en
+MODELDIR=.
+
+rm -f *.log $MODELDIR/model.npz.yml
+
+$MARIAN/marian --type transformer \
+    --model $MODELDIR/model.npz \
+    -d 0 1 2 3 \
+    --train-sets $DATA/train.enchant.spell.tok.err.gz $DATA/train.cor.gz --shuffle-in-ram --tempdir tmp --no-restore-corpus\
+    --data-weighting $DATA/train.enchant.spell.tok.w2.gz --data-weighting-type word \
+    --vocabs $DATA/vocab.{spm,spm} --tied-embeddings-all \
+    --max-length 150 \
+    --enc-depth 6 --dec-depth 6 --transformer-heads 8 \
+    --dropout-src 0.2 --dropout-trg 0.1 --transformer-dropout 0.3 --transformer-dropout-ffn 0.1 --transformer-dropout-attention 0.1 \
+    --exponential-smoothing --label-smoothing 0.1 \
+    --mini-batch-fit -w 9500 --mini-batch 1000 --maxi-batch 1000 --sync-sgd --optimizer-delay 4 \
+    --learn-rate 0.0003 --lr-warmup 16000 --lr-decay-inv-sqrt 16000 --lr-report \
+    --optimizer-params 0.9 0.98 1e-09 --clip-norm 0 \
+    --cost-type cross-entropy \
+    --valid-metrics cross-entropy translation perplexity \
+    --valid-sets $DATA/devset.{err,cor} \
+    --valid-translation-output $MODELDIR/devset.out --quiet-translation \
+    --valid-script-path $MODELDIR/validate.sh \
+    --valid-mini-batch 16 --beam-size 12 --normalize 1.0 \
+    --early-stopping 10 \
+    --valid-freq 1000 --save-freq 1000 --disp-freq 100 --disp-first 5 \
+    --overwrite --keep-best \
+    --log $MODELDIR/train.log --valid-log $MODELDIR/valid.log

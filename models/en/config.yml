@@ -1,0 +1,22 @@
+relative-paths: true
+models:
+  - model1.npz
+  - model2.npz
+  - model3.npz
+  - lm.npz
+weights:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 0.2
+vocabs:
+  - vocab.spm
+  - vocab.spm
+beam-size: 8
+normalize: 1
+word-penalty: 0
+mini-batch: 16
+maxi-batch: 100
+maxi-batch-sort: src
+mini-batch-words: 500
+workspace: 5000
