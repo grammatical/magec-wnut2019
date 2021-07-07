@@ -112,8 +112,8 @@ ru-weights: ru/mono.enchant.spell.tok.w2.gz
 		' perl $(MOSESSCRIPTS)/tokenizer/normalize-punctuation.perl | python3 $(TOOLS)/spacy_tok.py $*' \
 	| pigz > $@
 
-%/mono.gz: %/download.sh
-	cd $* && bash -x download.sh
+%/mono.gz: %/download_mono.sh
+	cd $* && bash -x download_mono.sh
 
 
 ###############################################################################
