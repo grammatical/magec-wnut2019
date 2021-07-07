@@ -19,5 +19,5 @@ apt-get install aspell-en
 apt-get install aspell-de
 apt-get install aspell-ru
 
-
-
+# Moses scripts
+git clone https://github.com/marian-nmt/moses-scripts
