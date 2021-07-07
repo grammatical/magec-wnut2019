@@ -25,3 +25,8 @@ First install Marian in `../models/tools/marian-dev`, then run:
     make all
 
 See `Makefile` for more details.
+
+## Authentic parallel data for testing and fine-tuning
+
+See `./??/download_parallel.sh` and `./??/prepare_train.sh` for examples how to
+download and prepare dev and train sets.

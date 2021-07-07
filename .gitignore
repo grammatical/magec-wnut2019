@@ -6,3 +6,8 @@
 *.npz
 *.spm
 *.tgz
+
+data/de/data*
+data/de/fm-*
+data/de/devset.*
+data/de/train.*
